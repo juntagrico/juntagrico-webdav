@@ -1,5 +1,5 @@
-def menu_template():
-    return ['wd/menu.html']
+from juntagrico.util import addons
 
-def admin_menu_template():
-    return ['wd/admin_menu.html']
+
+addons.config.register_admin_menu('wd/admin_menu.html')
+addons.config.register_user_menu('wd/menu.html')
