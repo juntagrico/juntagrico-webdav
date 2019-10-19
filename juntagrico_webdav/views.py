@@ -14,7 +14,7 @@ from juntagrico_webdav.entity.servers import WebdavServer
 @login_required
 def list(request, id):
     server = get_object_or_404(WebdavServer, pk=id)
-    url = server.url + server.path
+    url = server.url + '/' + server.path
     username = server.username
     password = server.password
     session = requests.Session()
@@ -46,7 +46,7 @@ def list(request, id):
 def get_item(request, id):
     path = request.GET.get('path')
     server = get_object_or_404(WebdavServer, pk=id)
-    url = server.url + path
+    url = server.url + '/' + server.path + '/' + path
     username = server.username
     password = server.password
     session = requests.Session()
