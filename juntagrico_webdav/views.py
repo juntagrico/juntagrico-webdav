@@ -1,4 +1,5 @@
 import requests
+import dateparser
 from xml.etree import ElementTree as ET
 from re import sub
 from urllib.parse import unquote, urlsplit
@@ -29,11 +30,23 @@ def list(request, id):
         href = sub("/.+/", '/', href)[1:]
         name = unquote(urlsplit(href).path)
         last_mod_date = prop.find('.//{DAV:}getlastmodified').text
+        last_mod_datetime = dateparser.parse(last_mod_date, languages=['en'])
+        if last_mod_datetime is not None:
+            last_mod_date = last_mod_datetime.strftime("%d.%m.%Y %H:%M:%S")
         if name != '':
             element = {'url': href,
                        'name': name,
-                       'date': last_mod_date}
+                       'date': last_mod_date,
+                       'datetime': last_mod_datetime}
             files.append(element)
+    if server.sortby < 3 or last_mod_datetime is None:
+        files.sort(key=lambda x: x['name'])
+        if server.sortby == 2:
+            files.reverse()
+    else:
+        files.sort(key=lambda x: x['datetime'])
+        if server.sortby == 4:
+            files.reverse()
     renderdict = get_menu_dict(request)
     renderdict .update({
         'webdav_server': server,
