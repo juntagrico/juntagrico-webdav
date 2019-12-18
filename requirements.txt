@@ -1,2 +1,2 @@
-juntagrico>=1.1.8
+git+http://github.com/juntagrico/juntagrico.git
 requests==2.21.0
