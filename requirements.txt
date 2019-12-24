@@ -1,2 +1,3 @@
-git+http://github.com/juntagrico/juntagrico.git
-requests==2.21.0
+juntagrico>=1.1.8
+requests==2.22.0
+dateparser==0.7.2
