@@ -66,8 +66,7 @@ def get_item(request, id, file):
     session.get(url)
     file_response = session.request('GET', url)
     content_type = file_response.headers['Content-Type']
-    print(content_type)
-    if 'application/xml' in content_type:
+    if file_response.status_code != 200 or 'application/xml' in content_type:
         raise Http404('File not found')
     response = HttpResponse(file_response.content, content_type=content_type)
     return response
