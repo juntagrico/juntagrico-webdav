@@ -5,7 +5,7 @@ from re import sub
 from urllib.parse import unquote, urlsplit
 
 from django.shortcuts import render, get_object_or_404
-from django.http import HttpResponse
+from django.http import HttpResponse, Http404
 from django.contrib.auth.decorators import login_required
 
 from juntagrico.views import get_menu_dict
@@ -56,15 +56,18 @@ def list(request, id):
     return render(request, "wd/list.html", renderdict)
 
 @login_required
-def get_item(request, id):
-    path = request.GET.get('path')
+def get_item(request, id, file):
     server = get_object_or_404(WebdavServer, pk=id)
-    url = server.url + '/' + server.path + '/' + path
+    url = server.url + '/' + server.path + '/' + file
     username = server.username
     password = server.password
     session = requests.Session()
     session.auth = (username, password)
     session.get(url)
     file_response = session.request('GET', url)
-    response = HttpResponse(file_response.content,content_type=file_response.headers['Content-Type'])
+    content_type = file_response.headers['Content-Type']
+    print(content_type)
+    if 'application/xml' in content_type:
+        raise Http404('File not found')
+    response = HttpResponse(file_response.content, content_type=content_type)
     return response
