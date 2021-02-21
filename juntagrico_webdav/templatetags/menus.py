@@ -9,6 +9,7 @@ register = template.Library()
 def admin_menu():
     return WebdavServerDao.active_admin_servers()
 
+
 @register.simple_tag
 def user_menu():
     return WebdavServerDao.active_user_servers()
