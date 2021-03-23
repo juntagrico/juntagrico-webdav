@@ -48,12 +48,13 @@ def list(request, id):
         if server.sortby == 4:
             files.reverse()
     renderdict = get_menu_dict(request)
-    renderdict .update({
+    renderdict.update({
         'webdav_server': server,
         'files': files,
         'menu': {'wd': 'active'},
     })
     return render(request, "wd/list.html", renderdict)
+
 
 @login_required
 def get_item(request, id):
@@ -66,5 +67,5 @@ def get_item(request, id):
     session.auth = (username, password)
     session.get(url)
     file_response = session.request('GET', url)
-    response = HttpResponse(file_response.content,content_type=file_response.headers['Content-Type'])
+    response = HttpResponse(file_response.content, content_type=file_response.headers['Content-Type'])
     return response

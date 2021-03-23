@@ -47,7 +47,6 @@ jobs:
     - name: flake 8
       run: |
         flake8 --count --ignore E501 juntagrico_webdav
-        flake8 --count --ignore E501 test
     - name: Slack notification
       if: ${{  env.SLACK_WEBHOOK != null && github.event_name == 'push' && always()}}
       env:
