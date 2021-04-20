@@ -16,7 +16,7 @@
         {% for file in files %}
             <tr>
                 <td>
-                    <a href="/wd/get/{{ webdav_server.id }}/?path={{ file.url }}"> {{ file.name }}</a>
+                    <a href="{% url 'webdav:get-file' id=webdav_server.id file=file.url %}">{{ file.name }}</a>
                 </td><td>
                     {{ file.date }}
                 </td>
