@@ -1,0 +1,5 @@
+[run]
+include =
+    juntagrico_webdav/*
+omit =
+    juntagrico_webdav/migrations/*
