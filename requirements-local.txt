@@ -1,2 +1,5 @@
-lxml==4.6.2
+-r requirements.txt
+lxml==4.6.3
+coverage
+flake8
 git+http://github.com/juntagrico/juntagrico.git
