@@ -18,8 +18,6 @@ def get_requirements(requirements_file):
 os.chdir(os.path.normpath(os.path.join(os.path.abspath(__file__), os.pardir)))
 
 setup(
-    name='juntagrico-webdav',
-    version='1.4.0',
     name=juntagrico_webdav.name,
     version=juntagrico_webdav.version,
     packages=find_packages(),
