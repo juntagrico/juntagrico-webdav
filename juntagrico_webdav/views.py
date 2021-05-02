@@ -7,8 +7,6 @@ from urllib.parse import unquote, urlsplit
 from django.shortcuts import render, get_object_or_404
 from django.http import HttpResponse, Http404
 from django.contrib.auth.decorators import login_required
-
-from juntagrico.views import get_menu_dict
 from juntagrico_webdav.entity.servers import WebdavServer
 
 
@@ -47,12 +45,11 @@ def list(request, id):
         files.sort(key=lambda x: x['datetime'])
         if server.sortby == 4:
             files.reverse()
-    renderdict = get_menu_dict(request)
-    renderdict.update({
+    renderdict = {
         'webdav_server': server,
         'files': files,
         'menu': {'wd': 'active'},
-    })
+    }
     return render(request, "wd/list.html", renderdict)
 
 

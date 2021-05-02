@@ -113,3 +113,5 @@ ENV/
 #idea
 .idea
 .idea/*
+
+*.bat
