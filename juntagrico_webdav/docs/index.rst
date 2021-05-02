@@ -12,5 +12,5 @@ Head over to
 
    instalation.rst
    settings.rst
-   1_3_release_notes.rst
+   1_4_release_notes.rst
    1_1_release_notes.rst
