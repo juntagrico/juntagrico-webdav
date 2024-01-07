@@ -7,7 +7,7 @@ from urllib.parse import unquote, urlsplit
 from django.shortcuts import render, get_object_or_404
 from django.http import HttpResponse, Http404
 from django.contrib.auth.decorators import login_required
-from juntagrico_webdav.entity.servers import WebdavServer
+from juntagrico_webdav.models import WebdavServer
 
 
 @login_required
@@ -22,6 +22,7 @@ def list(request, id):
     headers = {'Accept': '*/*', 'Depth': '1'}
     response = session.request('PROPFIND', url, headers=headers)
     files = []
+    last_mod_datetime = None
     tree = ET.fromstring(response.content)
     for prop in tree.findall('./{DAV:}response'):
         href = prop.find('./{DAV:}href').text
@@ -37,14 +38,12 @@ def list(request, id):
                        'date': last_mod_date,
                        'datetime': last_mod_datetime}
             files.append(element)
-    if server.sortby < 3 or last_mod_datetime is None:
+    if server.sorted_by_name or last_mod_datetime is None:
         files.sort(key=lambda x: x['name'])
-        if server.sortby == 2:
-            files.reverse()
     else:
         files.sort(key=lambda x: x['datetime'])
-        if server.sortby == 4:
-            files.reverse()
+    if server.sorted_desc:
+        files.reverse()
     renderdict = {
         'webdav_server': server,
         'files': files,
