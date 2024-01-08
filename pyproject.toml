@@ -40,8 +40,8 @@ Homepage = "https://www.juntagrico.org"
 Issues = "https://github.com/juntagrico/juntagrico/issues"
 Documentation = "https://juntagrico.readthedocs.io"
 
-[tool.setuptools]
-packages = ["juntagrico_webdav"]
+[tool.setuptools.packages.find]
+include = ["juntagrico_webdav*"]
 
 [tool.setuptools.dynamic]
 version = {attr = "juntagrico_webdav.__version__"}
