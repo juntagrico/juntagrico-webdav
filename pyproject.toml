@@ -37,8 +37,7 @@ dynamic = ["version"]
 
 [project.urls]
 Homepage = "https://www.juntagrico.org"
-Issues = "https://github.com/juntagrico/juntagrico/issues"
-Documentation = "https://juntagrico.readthedocs.io"
+Issues = "https://github.com/juntagrico/juntagrico-webdav/issues"
 
 [tool.setuptools.packages.find]
 include = ["juntagrico_webdav*"]

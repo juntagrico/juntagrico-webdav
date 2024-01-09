@@ -4,7 +4,7 @@ from xml.etree import ElementTree as ET
 from re import sub
 from urllib.parse import unquote, urlsplit
 
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render, get_object_or_404, redirect
 from django.http import HttpResponse, Http404
 from django.contrib.auth.decorators import login_required
 from juntagrico_webdav.models import WebdavServer
@@ -13,6 +13,8 @@ from juntagrico_webdav.models import WebdavServer
 @login_required
 def list(request, id):
     server = get_object_or_404(WebdavServer, pk=id)
+    if server.type == WebdavServer.ADMIN_SERVER and not request.user.is_staff:
+        return redirect('home')
     url = server.url + '/' + server.path
     username = server.username
     password = server.password
@@ -55,6 +57,8 @@ def list(request, id):
 @login_required
 def get_item(request, id, file):
     server = get_object_or_404(WebdavServer, pk=id)
+    if server.type == WebdavServer.ADMIN_SERVER and not request.user.is_staff:
+        return redirect('home')
     url = server.url + '/' + server.path + '/' + file
     username = server.username
     password = server.password
