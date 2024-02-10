@@ -1,7 +1,7 @@
-{% extends 'menu/admin_menu.html' %}
+{% extends 'juntagrico/menu/admin.html' %}
 {% load i18n %}
 {% load juntagrico_webdav.menus %}
-{% block extend_admin_menu %}
+{% block extend %}
     {% if request.user.is_staff %}
         {% admin_menu as menus %}
         {% if menus %}

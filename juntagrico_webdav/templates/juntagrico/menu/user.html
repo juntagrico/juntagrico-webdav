@@ -1,6 +1,6 @@
-{% extends 'menu/user_menu.html' %}
+{% extends 'juntagrico/menu/user.html' %}
 {% load juntagrico_webdav.menus %}
-{% block extend_user_menu %}
+{% block extend %}
     {% user_menu as menus %}
     {% for u_menu in menus %}
         <li class="nav-item">
