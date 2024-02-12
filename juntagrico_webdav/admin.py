@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from juntagrico_webdav.entity.servers import WebdavServer
+from juntagrico_webdav.models import WebdavServer
 
 
 class WebdavServerAdmin(admin.ModelAdmin):

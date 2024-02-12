@@ -3,6 +3,6 @@ from juntagrico_webdav import views
 
 app_name = 'webdav'
 urlpatterns = [
-    path('wd/list/<int:id>/', views.list),
+    path('wd/list/<int:id>/', views.list, name='list'),
     path('wd/get/<int:id>/<str:file>/', views.get_item, name='get-file')
 ]

@@ -1,11 +1,12 @@
 {% extends "base.html" %}
+{% load static %}
 {% load juntagrico.config %}
 {% block page_title %}
     <h3>{{webdav_server.name}}</h3>
 {% endblock %}
 
 {% block content %}
-     <table id="filter-table" class="list table" style="display: table;">
+     <table id="filter-table" class="list table">
         <thead>
         <tr>
             <th>Name</th>
@@ -24,10 +25,13 @@
         {% endfor %}
         </tbody>
     </table>
-    
 {% endblock %}
 
 {% block scripts %}
-    <script type="text/javascript" src="/static/external/datatables.min.js"></script>
-    <script type="text/javascript" src="/static/external/require.min.js" data-main="/static/js/initWDList.js"></script>
+    <script type="text/javascript" src="{% static "juntagrico/external/datatables/datatables.min.js" %}"></script>
+    <script type="text/javascript">
+        $(function(){
+            $("#filter-table").DataTable({"ordering": true});
+        })
+    </script>
 {% endblock %}
