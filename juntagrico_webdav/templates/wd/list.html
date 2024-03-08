@@ -1,4 +1,5 @@
 {% extends "base.html" %}
+{% load static %}
 {% load juntagrico.config %}
 {% block page_title %}
     <h3>{{webdav_server.name}}</h3>
@@ -28,6 +29,6 @@
 {% endblock %}
 
 {% block scripts %}
-    <script type="text/javascript" src="/static/external/datatables.min.js"></script>
-    <script type="text/javascript" src="/static/external/require.min.js" data-main="/static/js/initWDList.js"></script>
+    <script type="text/javascript" src="{% static '/juntagrico/external/datatables.min.js' %}"></script>
+    <script type="text/javascript" src="{% static '/juntagrico/external/require.min.js' %}" data-main="{% static '/js/initWDList.js' %}"></script>
 {% endblock %}
