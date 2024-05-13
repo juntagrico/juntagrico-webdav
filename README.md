@@ -17,4 +17,45 @@ This app allows to include webdav folders into juntagrico in order to share file
 This is an extension for juntagrico. You can find more information about juntagrico here
 (https://github.com/juntagrico/juntagrico).
 
-For more information information about how to install this app hop over to the doc section of the repo.
+# Installation
+
+Install juntagrico-webdav via `pip`
+
+    $ pip install juntagrico-webdav
+
+or add it in your projects `requirements.txt`
+
+In `settings.py` add `'juntagrico_webdav',` **before** juntagrico.
+
+```python
+INSTALLED_APPS = [
+    ...
+    'juntagrico_webdav',
+    'juntagrico',
+]
+```
+
+To avoid reloading the files list all the time, configure caching in `settings.py`
+
+```python
+CACHES = {
+    'default': {
+        'BACKEND': 'django.core.cache.backends.db.DatabaseCache',
+        'LOCATION': 'juntagrico_app_cache_table',
+        'TIMEOUT': None,
+    }
+}
+```
+
+then run
+
+    $ python -m manage createcachetable
+
+In your `urls.py` you also need to extend the pattern:
+
+```python
+urlpatterns = [
+    ...
+    path('', include('juntagrico_webdav.urls')),
+]
+```
