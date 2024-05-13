@@ -1,7 +1,7 @@
+import os
 import requests
 import dateparser
 from xml.etree import ElementTree as ET
-from re import sub
 from urllib.parse import unquote, urlsplit
 
 from django.shortcuts import render, get_object_or_404, redirect
@@ -27,9 +27,14 @@ def list(request, id):
     last_mod_datetime = None
     tree = ET.fromstring(response.content)
     for prop in tree.findall('./{DAV:}response'):
-        href = prop.find('./{DAV:}href').text
-        href = sub("/.+/", '/', href)[1:]
-        name = unquote(urlsplit(href).path)
+        collection_element = prop.find(".//{DAV:}resourcetype/{DAV:}collection")
+        if collection_element is not None:
+            # skip folders
+            continue
+        href = prop.find("./{DAV:}href").text
+        href = urlsplit(href).path
+        href = os.path.basename(href)
+        name = unquote(href)
         last_mod_date = prop.find('.//{DAV:}getlastmodified').text
         last_mod_datetime = dateparser.parse(last_mod_date, languages=['en'])
         if last_mod_datetime is not None:
