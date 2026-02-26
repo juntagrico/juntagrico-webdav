@@ -1,12 +1,13 @@
 import os
-import requests
-import dateparser
-from xml.etree import ElementTree as ET
 from urllib.parse import unquote, urlsplit
+from xml.etree import ElementTree as ET
 
-from django.shortcuts import render, get_object_or_404, redirect
-from django.http import HttpResponse, Http404
+import dateparser
+import requests
 from django.contrib.auth.decorators import login_required
+from django.http import Http404, HttpResponse
+from django.shortcuts import get_object_or_404, redirect, render
+
 from juntagrico_webdav.models import WebdavServer
 
 
@@ -74,5 +75,4 @@ def get_item(request, id, file):
     content_type = file_response.headers['Content-Type']
     if file_response.status_code != 200 or 'application/xml' in content_type:
         raise Http404('File not found')
-    response = HttpResponse(file_response.content, content_type=content_type)
-    return response
+    return HttpResponse(file_response.content, content_type=content_type)

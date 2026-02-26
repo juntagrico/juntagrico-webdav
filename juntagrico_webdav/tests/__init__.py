@@ -1,5 +1,3 @@
-from django.contrib.auth.models import Permission
-
 from juntagrico.tests import JuntagricoTestCase
 
 from juntagrico_webdav.models import WebdavServer

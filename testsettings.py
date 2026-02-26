@@ -55,7 +55,7 @@ EMAIL_BACKEND = 'juntagrico.backends.email.ConsoleEmailBackend'
 EMAIL_HOST = os.environ.get('JUNTAGRICO_EMAIL_HOST')
 EMAIL_HOST_USER = os.environ.get('JUNTAGRICO_EMAIL_USER')
 EMAIL_HOST_PASSWORD = os.environ.get('JUNTAGRICO_EMAIL_PASSWORD')
-EMAIL_PORT = os.environ.get('JUNTAGRICO_EMAIL_PORT', 2525 )
+EMAIL_PORT = os.environ.get('JUNTAGRICO_EMAIL_PORT', 2525)
 EMAIL_USE_TLS = os.environ.get('JUNTAGRICO_EMAIL_TLS', False)
 
 
@@ -65,7 +65,7 @@ WHITELIST_EMAILS = []
 def whitelist_email_from_env(var_env_name):
     email = os.environ.get(var_env_name)
     if email:
-        WHITELIST_EMAILS.append(email.replace('@gmail.com', '(\+\S+)?@gmail.com'))
+        WHITELIST_EMAILS.append(email.replace('@gmail.com', r'(\+\S+)?@gmail.com'))
 
 
 if DEBUG is True:
