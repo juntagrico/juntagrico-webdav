@@ -1,8 +1,8 @@
 # juntagrico-webdav
 
 [![juntagrico-ci](https://github.com/juntagrico/juntagrico-webdav/actions/workflows/juntagrico-ci.yml/badge.svg?branch=main&event=push)](https://github.com/juntagrico/juntagrico-webdav/actions/workflows/juntagrico-ci.yml)
-[![Maintainability](https://api.codeclimate.com/v1/badges/a597b9f0d54b836f1b46/maintainability)](https://codeclimate.com/github/juntagrico/juntagrico-webdav/maintainability)
-[![Test Coverage](https://api.codeclimate.com/v1/badges/a597b9f0d54b836f1b46/test_coverage)](https://codeclimate.com/github/juntagrico/juntagrico-webdav/test_coverage)
+[![Maintainability](https://qlty.sh/gh/juntagrico/projects/juntagrico-webdav/maintainability.svg)](https://qlty.sh/gh/juntagrico/projects/juntagrico-webdav)
+[![Code Coverage](https://qlty.sh/gh/juntagrico/projects/juntagrico-webdav/coverage.svg)](https://qlty.sh/gh/juntagrico/projects/juntagrico-webdav)
 [![image](https://img.shields.io/pypi/v/juntagrico-webdav.svg)](https://pypi.python.org/pypi/juntagrico-webdav)
 [![image](https://img.shields.io/pypi/l/juntagrico-webdav.svg)](https://pypi.python.org/pypi/juntagrico-webdav)
 [![image](https://img.shields.io/pypi/pyversions/juntagrico-webdav.svg)](https://pypi.python.org/pypi/juntagrico-webdav)

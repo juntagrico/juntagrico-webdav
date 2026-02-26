@@ -14,13 +14,15 @@ INSTALLED_APPS = [
     'django.contrib.sites',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'django.contrib.admin',
-    'fontawesomefree',
+    'juntagrico.apps.JuntagricoAdminConfig',
     'impersonate',
     'import_export',
     'crispy_forms',
+    'crispy_bootstrap4',
     'juntagrico_webdav',
     'juntagrico',
+    'django_select2',
+    'djrichtextfield',
 ]
 
 DATABASES = {
@@ -46,6 +48,9 @@ MIDDLEWARE = (
     'django.contrib.messages.middleware.MessageMiddleware',
     'impersonate.middleware.ImpersonateMiddleware',
 )
+
+
+EMAIL_BACKEND = 'juntagrico.backends.email.ConsoleEmailBackend'
 
 EMAIL_HOST = os.environ.get('JUNTAGRICO_EMAIL_HOST')
 EMAIL_HOST_USER = os.environ.get('JUNTAGRICO_EMAIL_USER')
@@ -115,8 +120,6 @@ TEMPLATES = [
 ]
 
 LOGIN_REDIRECT_URL = "/"
-
-SESSION_SERIALIZER = 'django.contrib.sessions.serializers.PickleSerializer'
 
 CACHES = {
     'default': {

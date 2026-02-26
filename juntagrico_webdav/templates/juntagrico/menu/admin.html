@@ -6,11 +6,11 @@
         {% admin_menu as menus %}
         {% if menus %}
             <li class="nav-item">
-                <a class="nav-link" data-toggle="collapse" href="#wd">
+                <a class="nav-link {% if request.resolver_match.app_name != 'webdav' or 'list' not in request.resolver_match.url_name %} collapsed{% endif %}" data-toggle="collapse" href="#wd">
+                    <i class="bi bi-caret-down turn"></i>
                     Webdav
-                    <i class="fas fa-angle-right"></i>
                 </a>
-                <div class="collapse" id="wd">
+                <div class="collapse{% if request.resolver_match.app_name == 'webdav' and 'list' in request.resolver_match.url_name %} show{% endif %}" id="wd">
                     <ul class="nav flex-column subadmin-menu">
                         {% for admin_menu in menus %}
                             <li class="nav-item">
