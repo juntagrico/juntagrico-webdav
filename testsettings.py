@@ -14,13 +14,15 @@ INSTALLED_APPS = [
     'django.contrib.sites',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'django.contrib.admin',
-    'fontawesomefree',
+    'juntagrico.apps.JuntagricoAdminConfig',
     'impersonate',
     'import_export',
     'crispy_forms',
+    'crispy_bootstrap4',
     'juntagrico_webdav',
     'juntagrico',
+    'django_select2',
+    'djrichtextfield',
 ]
 
 DATABASES = {
@@ -47,10 +49,13 @@ MIDDLEWARE = (
     'impersonate.middleware.ImpersonateMiddleware',
 )
 
+
+EMAIL_BACKEND = 'juntagrico.backends.email.ConsoleEmailBackend'
+
 EMAIL_HOST = os.environ.get('JUNTAGRICO_EMAIL_HOST')
 EMAIL_HOST_USER = os.environ.get('JUNTAGRICO_EMAIL_USER')
 EMAIL_HOST_PASSWORD = os.environ.get('JUNTAGRICO_EMAIL_PASSWORD')
-EMAIL_PORT = os.environ.get('JUNTAGRICO_EMAIL_PORT', 2525 )
+EMAIL_PORT = os.environ.get('JUNTAGRICO_EMAIL_PORT', 2525)
 EMAIL_USE_TLS = os.environ.get('JUNTAGRICO_EMAIL_TLS', False)
 
 
@@ -60,7 +65,7 @@ WHITELIST_EMAILS = []
 def whitelist_email_from_env(var_env_name):
     email = os.environ.get(var_env_name)
     if email:
-        WHITELIST_EMAILS.append(email.replace('@gmail.com', '(\+\S+)?@gmail.com'))
+        WHITELIST_EMAILS.append(email.replace('@gmail.com', r'(\+\S+)?@gmail.com'))
 
 
 if DEBUG is True:
@@ -115,8 +120,6 @@ TEMPLATES = [
 ]
 
 LOGIN_REDIRECT_URL = "/"
-
-SESSION_SERIALIZER = 'django.contrib.sessions.serializers.PickleSerializer'
 
 CACHES = {
     'default': {

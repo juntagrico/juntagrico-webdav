@@ -1,4 +1,5 @@
 from django.urls import path
+
 from juntagrico_webdav import views
 
 app_name = 'webdav'
