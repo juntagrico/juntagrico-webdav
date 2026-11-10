@@ -7,6 +7,7 @@ import requests
 from django.contrib.auth.decorators import login_required
 from django.http import Http404, HttpResponse
 from django.shortcuts import get_object_or_404, redirect, render
+from django.utils.translation import gettext as _
 
 from juntagrico_webdav.models import WebdavServer
 
@@ -24,28 +25,36 @@ def list(request, id):
     session.get(url)
     headers = {'Accept': '*/*', 'Depth': '1'}
     response = session.request('PROPFIND', url, headers=headers)
+    error_message = None
     files = []
     last_mod_datetime = None
-    tree = ET.fromstring(response.content)
-    for prop in tree.findall('./{DAV:}response'):
-        collection_element = prop.find(".//{DAV:}resourcetype/{DAV:}collection")
-        if collection_element is not None:
-            # skip folders
-            continue
-        href = prop.find("./{DAV:}href").text
-        href = urlsplit(href).path
-        href = os.path.basename(href)
-        name = unquote(href)
-        last_mod_date = prop.find('.//{DAV:}getlastmodified').text
-        last_mod_datetime = dateparser.parse(last_mod_date, languages=['en'])
-        if last_mod_datetime is not None:
-            last_mod_date = last_mod_datetime.strftime("%d.%m.%Y %H:%M:%S")
-        if name != '':
-            element = {'url': href,
-                       'name': name,
-                       'date': last_mod_date,
-                       'datetime': last_mod_datetime}
-            files.append(element)
+    if response.status_code not in (200, 207):
+        error_message = _('WebDAV server hat einen Fehler zurückgegeben: {}').format(response.status_code)
+    else:
+        try:
+            tree = ET.fromstring(response.content)
+        except ET.ParseError:
+            error_message = _('WebDAV server hat eine ungültige Antwort zurückgegeben.')
+        if error_message is None:
+            for prop in tree.findall('./{DAV:}response'):
+                collection_element = prop.find(".//{DAV:}resourcetype/{DAV:}collection")
+                if collection_element is not None:
+                    # skip folders
+                    continue
+                href = prop.find("./{DAV:}href").text
+                href = urlsplit(href).path
+                href = os.path.basename(href)
+                name = unquote(href)
+                last_mod_date = prop.find('.//{DAV:}getlastmodified').text
+                last_mod_datetime = dateparser.parse(last_mod_date, languages=['en'])
+                if last_mod_datetime is not None:
+                    last_mod_date = last_mod_datetime.strftime("%d.%m.%Y %H:%M:%S")
+                if name != '':
+                    element = {'url': href,
+                               'name': name,
+                               'date': last_mod_date,
+                               'datetime': last_mod_datetime}
+                    files.append(element)
     if server.sorted_by_name or last_mod_datetime is None:
         files.sort(key=lambda x: x['name'])
     else:
@@ -55,6 +64,7 @@ def list(request, id):
     renderdict = {
         'webdav_server': server,
         'files': files,
+        'error_message': error_message,
         'menu': {'wd': 'active'},
     }
     return render(request, "wd/list.html", renderdict)
